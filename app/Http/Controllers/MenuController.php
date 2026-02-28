@@ -2,36 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
+use App\Models\Plat;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class MenuController extends Controller
 {
-    public function index() {
-        $menus = Menu::all();
-        return view('menus.index', compact('menus'));
-    }
+    public function index(Request $request): View
+    {
+        $plats = Plat::query()
+            ->where('est_disponible', true)
+            ->when($request->filled('q'), function ($query) use ($request) {
+                $q = $request->string('q')->toString();
+                $query->where(function ($subQuery) use ($q) {
+                    $subQuery
+                        ->where('nom', 'like', "%{$q}%")
+                        ->orWhere('description', 'like', "%{$q}%")
+                        ->orWhere('categorie', 'like', "%{$q}%");
+                });
+            })
+            ->when($request->filled('categorie'), function ($query) use ($request) {
+                $query->where('categorie', $request->string('categorie')->toString());
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
 
-    public function create() {
-        return view('menus.create');
-    }
+        $categories = Plat::query()
+            ->whereNotNull('categorie')
+            ->distinct()
+            ->orderBy('categorie')
+            ->pluck('categorie');
 
-    public function store(Request $request) {
-        Menu::create($request->all());
-        return redirect()->route('menus.index');
-    }
-
-    public function edit(Menu $menu) {
-        return view('menus.edit', compact('menu'));
-    }
-
-    public function update(Request $request, Menu $menu) {
-        $menu->update($request->all());
-        return redirect()->route('menus.index');
-    }
-
-    public function destroy(Menu $menu) {
-        $menu->delete();
-        return redirect()->route('menus.index');
+        return view('menu', compact('plats', 'categories'));
     }
 }

@@ -4,501 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Restaurant</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #333;
-        }
-        .navbar-brand i {
-            color: #ff6b6b;
-            margin-right: 8px;
-        }
-        .user-dropdown {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-        .search-bar {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .category-pills {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 30px 0;
-        }
-        .category-pill {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 30px;
-            padding: 8px 20px;
-            font-weight: 500;
-            color: #495057;
-            transition: all 0.2s;
-            cursor: default;
-        }
-        .category-pill.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-        .category-pill i {
-            margin-right: 6px;
-        }
-        .card {
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            overflow: hidden;
-            height: 100%;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        .card-img-top {
-            height: 180px;
-            object-fit: cover;
-            background-color: #e9ecef;
-        }
-        .card-body {
-            padding: 1.2rem;
-        }
-        .card-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .card-text {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .price {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: #28a745;
-        }
-        .btn-order {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 8px 20px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .btn-order:hover {
-            transform: scale(1.05);
-            color: white;
-            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
-        }
-        .btn-order i {
-            margin-right: 5px;
-        }
-        .footer {
-            background: white;
-            padding: 20px 0;
-            margin-top: 50px;
-            border-top: 1px solid #dee2e6;
-            color: #6c757d;
-        }
-        .section-title {
-            font-weight: 700;
-            color: #333;
-            position: relative;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 2px;
-        }
+        body { background: #f8f9fa; }
+        .card-img-top { height: 180px; object-fit: cover; background: #e9ecef; }
+        .price { color: #198754; font-weight: 700; font-size: 1.1rem; }
     </style>
 </head>
 <body>
-
-    <!-- Header avec utilisateur connecté -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="bi bi-shop"></i> Le Gourmet
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Menus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Commandes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-                <div class="user-dropdown dropdown">
-                    <div class="avatar" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
-                        JD
-                    </div>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Mon profil</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-bag me-2"></i>Mes commandes</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="#">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                    <span class="d-none d-lg-inline">Jean Dupont</span>
-                </div>
-            </div>
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ route('home') }}">Le Gourmet</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{{ route('menu') }}">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('commandes.index') }}">Commandes</a></li>
+            </ul>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger btn-sm">Deconnexion</button>
+            </form>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <main class="container my-5">
-        <!-- Barre de recherche -->
-        <div class="search-bar mb-4">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control border-start-0" placeholder="Rechercher un plat...">
-            </div>
+<main class="container my-5">
+    <h3 class="mb-4">Menu complet</h3>
+
+    @if(session('error'))
+        <div class="alert alert-warning">{{ session('error') }}</div>
+    @endif
+
+    <form method="GET" action="{{ route('menu') }}" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input
+                type="text"
+                name="q"
+                value="{{ request('q') }}"
+                class="form-control"
+                placeholder="Rechercher un plat, description ou categorie..."
+            >
         </div>
-
-        <!-- Filtres par catégorie (simulés) -->
-        <div class="category-pills">
-            <span class="category-pill active"><i class="bi bi-grid"></i> Tous</span>
-            <span class="category-pill"><i class="bi bi-egg-fried"></i> Entrées</span>
-            <span class="category-pill"><i class="bi bi-basket"></i> Plats</span>
-            <span class="category-pill"><i class="bi bi-cup-straw"></i> Desserts</span>
-            <span class="category-pill"><i class="bi bi-cup-hot"></i> Boissons</span>
+        <div class="col-md-4">
+            <select name="categorie" class="form-select">
+                <option value="">Toutes les categories</option>
+                @foreach($categories as $categorie)
+                    <option value="{{ $categorie }}" @selected(request('categorie') === $categorie)>{{ $categorie }}</option>
+                @endforeach
+            </select>
         </div>
-
-        <!-- Section Entrées -->
-        <h4 class="section-title"><i class="bi bi-egg-fried me-2"></i>Entrées</h4>
-        <div class="row g-4 mb-5">
-            <!-- Carte entrée 1 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Salade">
-                    <div class="card-body">
-                        <h5 class="card-title">Salade César</h5>
-                        <p class="card-text">Laitue romaine, poulet grillé, parmesan, croûtons, sauce César.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">8,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte entrée 2 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1574484287842-0b4032ad96ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Tartare">
-                    <div class="card-body">
-                        <h5 class="card-title">Tartare de saumon</h5>
-                        <p class="card-text">Saumon frais, avocat, mangue, coriandre, sauce yuzu.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">11,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte entrée 3 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Soupe">
-                    <div class="card-body">
-                        <h5 class="card-title">Soupe à l'oignon</h5>
-                        <p class="card-text">Soupe à l'oignon gratinée, croûtons, fromage fondu.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">7,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte entrée 4 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Bruschetta">
-                    <div class="card-body">
-                        <h5 class="card-title">Bruschetta</h5>
-                        <p class="card-text">Pain grillé, tomates fraîches, basilic, ail, huile d'olive.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">6,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-2 d-grid">
+            <button class="btn btn-primary" type="submit">Filtrer</button>
         </div>
+    </form>
 
-        <!-- Section Plats principaux -->
-        <h4 class="section-title"><i class="bi bi-basket me-2"></i>Plats principaux</h4>
-        <div class="row g-4 mb-5">
-            <!-- Carte plat 1 -->
+    <div class="row g-4">
+        @forelse($plats as $plat)
             <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Burger">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img
+                        src="{{ $plat->thmbdail ?: 'https://via.placeholder.com/640x480?text=Plat' }}"
+                        class="card-img-top"
+                        alt="{{ $plat->nom }}"
+                    >
                     <div class="card-body">
-                        <h5 class="card-title">Burger classique</h5>
-                        <p class="card-text">Steak haché, cheddar, salade, tomate, oignon, sauce maison.</p>
+                        <h5 class="card-title">{{ $plat->nom }}</h5>
+                        <p class="card-text text-muted">{{ $plat->description ?: 'Aucune description disponible.' }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">14,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
+                            <span class="price">{{ number_format((float) $plat->prix, 2, ',', ' ') }} $</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge text-bg-light">{{ $plat->categorie ?: 'sans categorie' }}</span>
+                                <a class="btn btn-outline-primary btn-sm" href="{{ route('commandes.create', ['plat' => $plat->id]) }}">Commander</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Carte plat 2 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Pizza">
-                    <div class="card-body">
-                        <h5 class="card-title">Pizza Margherita</h5>
-                        <p class="card-text">Sauce tomate, mozzarella, basilic frais, huile d'olive.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">10,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-info mb-0">Aucun plat ne correspond a votre recherche.</div>
             </div>
-            <!-- Carte plat 3 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Pâtes">
-                    <div class="card-body">
-                        <h5 class="card-title">Pâtes carbonara</h5>
-                        <p class="card-text">Spaghetti, crème, lardons, parmesan, jaune d'œuf.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">13,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte plat 4 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1515516969-d4008cc6241a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Poisson">
-                    <div class="card-body">
-                        <h5 class="card-title">Filet de bar</h5>
-                        <p class="card-text">Filet de bar grillé, légumes de saison, beurre blanc.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">17,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte plat 5 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Riz">
-                    <div class="card-body">
-                        <h5 class="card-title">Bowl végétarien</h5>
-                        <p class="card-text">Riz complet, légumes frais, avocat, graines de sésame.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">12,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte plat 6 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1574484287842-0b4032ad96ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Tartare">
-                    <div class="card-body">
-                        <h5 class="card-title">Tartare de bœuf</h5>
-                        <p class="card-text">Bœuf haché, oignons, câpres, cornichons, frites.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">16,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforelse
+    </div>
 
-        <!-- Section Desserts -->
-        <h4 class="section-title"><i class="bi bi-cup-straw me-2"></i>Desserts</h4>
-        <div class="row g-4 mb-5">
-            <!-- Carte dessert 1 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Tiramisu">
-                    <div class="card-body">
-                        <h5 class="card-title">Tiramisu</h5>
-                        <p class="card-text">Mascarpone, café, cacao, biscuits à la cuillère.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">6,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte dessert 2 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Fondant">
-                    <div class="card-body">
-                        <h5 class="card-title">Fondant au chocolat</h5>
-                        <p class="card-text">Cœur coulant au chocolat noir, glace vanille.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">7,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte dessert 3 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Crème brûlée">
-                    <div class="card-body">
-                        <h5 class="card-title">Crème brûlée</h5>
-                        <p class="card-text">Crème onctueuse à la vanille, caramel craquant.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">6,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte dessert 4 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1559715541-5d6d0c9c7c24?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Mousse">
-                    <div class="card-body">
-                        <h5 class="card-title">Mousse au chocolat</h5>
-                        <p class="card-text">Mousse aérienne au chocolat noir, copeaux de chocolat.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">5,90 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="mt-4 d-flex justify-content-center">
+        {{ $plats->links() }}
+    </div>
+</main>
 
-        <!-- Section Boissons -->
-        <h4 class="section-title"><i class="bi bi-cup-hot me-2"></i>Boissons</h4>
-        <div class="row g-4">
-            <!-- Carte boisson 1 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Café">
-                    <div class="card-body">
-                        <h5 class="card-title">Café</h5>
-                        <p class="card-text">Expresso, allongé ou café crème.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">2,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte boisson 2 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1551024500-4b8a7b4c3e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Thé">
-                    <div class="card-body">
-                        <h5 class="card-title">Thé</h5>
-                        <p class="card-text">Thé vert, noir ou infusion du moment.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">3,00 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte boisson 3 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Jus">
-                    <div class="card-body">
-                        <h5 class="card-title">Jus d'orange</h5>
-                        <p class="card-text">Pur jus pressé, frais.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">4,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte boisson 4 -->
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1551024500-4b8a7b4c3e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Soda">
-                    <div class="card-body">
-                        <h5 class="card-title">Soda</h5>
-                        <p class="card-text">Coca-Cola, Sprite, Fanta.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price">3,50 €</span>
-                            <button class="btn btn-order btn-sm"><i class="bi bi-plus-circle"></i> Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer simple -->
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2025 Le Gourmet. Tous droits réservés.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

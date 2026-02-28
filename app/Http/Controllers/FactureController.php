@@ -2,26 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commande;
 use App\Models\Facture;
+use Illuminate\View\View;
 
 class FactureController extends Controller
 {
-    public function store($commande_id){
-        $commande = Commande::with('ligneCommandes.menu')->find($commande_id);
+    public function show(Facture $facture): View
+    {
+        $facture->load(['commande.utilisateur', 'commande.lignesCommandes.plat']);
 
-        $total = 0;
-        foreach($commande->ligneCommandes as $l){
-            $total += $l->quantite * $l->menu->prix;
-        }
-
-        Facture::create([
-            'commande_id'=>$commande->id,
-            'montant_total'=>$total
-        ]);
-
-        $commande->update(['statut'=>'payée']);
-
-        return redirect()->back();
+        return view('factures.show', compact('facture'));
     }
 }

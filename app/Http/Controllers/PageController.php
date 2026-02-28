@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plat;
+use Illuminate\View\View;
+
 class PageController extends Controller
 {
-    public function home()
+    public function home(): View
     {
-        return view('home');
-    }
+        $plats = Plat::query()
+            ->where('est_disponible', true)
+            ->latest()
+            ->paginate(8);
 
-    public function menu()
-    { 
-        return view('menu');
+        return view('home', compact('plats'));
     }
 }

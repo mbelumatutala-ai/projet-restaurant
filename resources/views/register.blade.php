@@ -322,7 +322,7 @@
         document.getElementById('password').addEventListener('input', function() {
             const password = this.value;
             
-            // Vérification de la longueur
+            // Vérification de la longu$
             const lengthCheck = document.getElementById('length-check');
             if (password.length >= 8) {
                 lengthCheck.className = 'text-success';
