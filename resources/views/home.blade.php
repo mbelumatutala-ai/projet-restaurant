@@ -13,30 +13,16 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('home') }}">Le Gourmet</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navHome">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navHome">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item"><a class="nav-link active" href="{{ route('home') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('menu') }}">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('commandes.index') }}">Commandes</a></li>
-            </ul>
-            <div class="d-flex align-items-center gap-3">
-                <span>{{ auth()->user()->name }}</span>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-danger btn-sm">Deconnexion</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+<x-navbar active="home" />
 
 <main class="container my-5">
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-warning">{{ session('error') }}</div>
+    @endif
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Nos plats populaires</h3>
         <a href="{{ route('menu') }}" class="btn btn-primary btn-sm">Voir tout le menu</a>
@@ -56,7 +42,10 @@
                         <p class="card-text text-muted">{{ $plat->description ?: 'Aucune description disponible.' }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="price">{{ number_format((float) $plat->prix, 2, ',', ' ') }} $</span>
-                            <a class="btn btn-outline-primary btn-sm" href="{{ route('commandes.create', ['plat' => $plat->id]) }}">Commander</a>
+                            <form method="POST" action="{{ route('panier.add', $plat) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-primary btn-sm">Commander</button>
+                            </form>
                         </div>
                     </div>
                 </div>

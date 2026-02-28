@@ -12,25 +12,7 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('home') }}">Le Gourmet</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ route('menu') }}">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('commandes.index') }}">Commandes</a></li>
-            </ul>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger btn-sm">Deconnexion</button>
-            </form>
-        </div>
-    </div>
-</nav>
+<x-navbar active="menu" />
 
 <main class="container my-5">
     <h3 class="mb-4">Menu complet</h3>
@@ -78,7 +60,10 @@
                             <span class="price">{{ number_format((float) $plat->prix, 2, ',', ' ') }} $</span>
                             <div class="d-flex align-items-center gap-2">
                                 <span class="badge text-bg-light">{{ $plat->categorie ?: 'sans categorie' }}</span>
-                                <a class="btn btn-outline-primary btn-sm" href="{{ route('commandes.create', ['plat' => $plat->id]) }}">Commander</a>
+                                <form method="POST" action="{{ route('panier.add', $plat) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Commander</button>
+                                </form>
                             </div>
                         </div>
                     </div>

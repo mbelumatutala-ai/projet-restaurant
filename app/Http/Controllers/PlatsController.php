@@ -3,34 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plat;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PlatsController extends Controller
 {
-    // Affiche tous les plats
-    public function index()
+    public function index(): View
     {
-        $plats = Plat::all();
+        $this->ensureAdmin();
+
+        $plats = Plat::query()->latest()->get();
+
         return view('plats.index', compact('plats'));
     }
 
-    // Ajoute un plat
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'nom' => 'required|string',
-            'prix' => 'required|numeric|min:0',
+        $this->ensureAdmin();
+
+        $validated = $request->validate([
+            'nom' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'thmbdail' => ['nullable', 'url'],
+            'prix' => ['required', 'numeric', 'min:0'],
+            'categorie' => ['nullable', 'string', 'max:255'],
+            'est_disponible' => ['nullable', 'boolean'],
         ]);
 
-        Plat::create($request->all());
-        return redirect()->back()->with('success', 'Plat ajouté !');
+        Plat::create([
+            'nom' => $validated['nom'],
+            'description' => $validated['description'] ?? null,
+            'thmbdail' => $validated['thmbdail'] ?? null,
+            'prix' => $validated['prix'],
+            'categorie' => $validated['categorie'] ?? null,
+            'est_disponible' => (bool) ($validated['est_disponible'] ?? true),
+        ]);
+
+        return back()->with('success', 'Plat ajoute.');
     }
 
-    // Supprime un plat
-    public function destroy($id)
+    public function destroy(Plat $plat): RedirectResponse
     {
-        $plat = Plat::findOrFail($id);
+        $this->ensureAdmin();
+
         $plat->delete();
-        return redirect()->back()->with('success', 'Plat supprimé !');
+
+        return back()->with('success', 'Plat supprime.');
+    }
+
+    private function ensureAdmin(): void
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Acces reserve a un administrateur.');
+        }
     }
 }

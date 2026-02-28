@@ -7,10 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<x-navbar active="commandes" />
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Gestion des commandes</h3>
-        <a href="{{ route('menu') }}" class="btn btn-primary">Nouvelle commande</a>
+        <a href="{{ route('commandes.create') }}" class="btn btn-primary">Mon panier</a>
     </div>
 
     @if(session('success'))

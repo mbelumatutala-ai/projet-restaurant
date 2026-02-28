@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<x-navbar active="commandes" />
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Commande #{{ $commande->id }}</h3>
@@ -62,6 +63,29 @@
                     <div class="mb-0"><strong>Date:</strong> {{ $commande->created_at?->format('d/m/Y H:i') }}</div>
                 </div>
             </div>
+
+            @if(!$commande->facture && auth()->user()->role === 'admin')
+                <div class="card border-0 shadow-sm mt-3">
+                    <div class="card-header bg-white fw-semibold">Validation admin</div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('commandes.valider', $commande) }}">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label">Mode de paiement</label>
+                                <select name="mode_paiement" class="form-select" required>
+                                    <option value="">Choisir</option>
+                                    <option value="especes">Especes</option>
+                                    <option value="carte">Carte</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Valider la commande et generer la facture</button>
+                        </form>
+                    </div>
+                </div>
+            @elseif(!$commande->facture)
+                <div class="alert alert-warning mt-3 mb-0">En attente de validation par un administrateur.</div>
+            @endif
         </div>
     </div>
 </div>
