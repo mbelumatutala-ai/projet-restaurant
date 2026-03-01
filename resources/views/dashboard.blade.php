@@ -28,7 +28,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white fw-semibold">Ajouter un plat</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('plats.store') }}">
+                    <form method="POST" action="{{ route('plats.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-2">
                             <label class="form-label">Nom</label>
@@ -39,8 +39,9 @@
                             <textarea class="form-control" name="description" rows="2"></textarea>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label">Thumbnail URL</label>
-                            <input class="form-control" type="url" name="thmbdail">
+                            <label class="form-label">Image du plat</label>
+                            <input class="form-control" type="file" name="thmbdail" accept="image/*">
+                            <small class="text-muted">Format: JPG, PNG. Max: 2MB</small>
                         </div>
                         <div class="mb-2">
                             <label class="form-label">Prix</label>

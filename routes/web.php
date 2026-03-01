@@ -5,7 +5,6 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\FactureController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlatsController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [PageController::class, 'home'])->name('root');
     Route::get('/home', [PageController::class, 'home'])->name('home');
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [PlatsController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
     Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');
@@ -39,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/factures/{facture}', [FactureController::class, 'show'])->name('factures.show');
 
+    Route::get('/plats/create', [PlatsController::class, 'create'])->name('plats.create');
     Route::post('/plats', [PlatsController::class, 'store'])->name('plats.store');
     Route::post('/plats/{plat}/delete', [PlatsController::class, 'destroy'])->name('plats.destroy');
 });

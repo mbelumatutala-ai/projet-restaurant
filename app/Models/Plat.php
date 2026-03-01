@@ -23,4 +23,16 @@ class Plat extends Model
     {
         return $this->hasMany(Ligne_commande::class, 'plat_id');
     }
+
+    /**
+     * Obtenir l'URL complète de l'image du plat
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->thmbdail) {
+            return null;
+        }
+
+        return asset('storage/' . $this->thmbdail);
+    }
 }
