@@ -16,10 +16,15 @@ class CommandeController extends Controller
 {
     public function index(): View
     {
-        $commandes = Commande::query()
+        $query = Commande::query()
             ->with(['utilisateur', 'facture'])
-            ->latest()
-            ->paginate(10);
+            ->latest();
+
+        if (auth()->user()->role !== 'admin') {
+            $query->where('utilisateur_id', auth()->id());
+        }
+
+        $commandes = $query->paginate(10);
 
         return view('commandes.index', compact('commandes'));
     }
@@ -210,6 +215,10 @@ class CommandeController extends Controller
 
     public function show(Commande $commande): View
     {
+        if (auth()->user()->role !== 'admin' && (int) $commande->utilisateur_id !== (int) auth()->id()) {
+            abort(403, 'Vous ne pouvez pas consulter cette commande.');
+        }
+
         $commande->load(['utilisateur', 'lignesCommandes.plat', 'facture']);
 
         return view('commandes.show', compact('commande'));

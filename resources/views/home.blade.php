@@ -8,6 +8,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body { background: #f8f9fa; }
+        .hero {
+            background: linear-gradient(135deg, #0d6efd 0%, #20c997 100%);
+            border-radius: 1.5rem;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.28), transparent 45%);
+            pointer-events: none;
+        }
+        .hero .hero-content {
+            position: relative;
+            z-index: 1;
+        }
         .card-img-top { height: 180px; object-fit: cover; background: #e9ecef; }
         .price { color: #198754; font-weight: 700; font-size: 1.1rem; }
     </style>
@@ -22,6 +40,34 @@
     @if(session('error'))
         <div class="alert alert-warning">{{ session('error') }}</div>
     @endif
+
+    <section class="hero p-4 p-md-5 mb-5 shadow-sm">
+        <div class="hero-content">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge text-bg-light text-dark mb-3">Le Gourmet</span>
+                    <h1 class="display-6 fw-bold mb-3">Savourez nos plats maison, prepares avec des produits frais.</h1>
+                    <p class="lead mb-4">
+                        Decouvrez les nouveautes du chef, commandez en quelques clics, et suivez vos commandes en temps reel.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ route('menu') }}" class="btn btn-light btn-lg fw-semibold">Voir le menu</a>
+                        <a href="{{ route('commandes.create') }}" class="btn btn-outline-light btn-lg">Mon panier</a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bg-white text-dark rounded-4 p-4 shadow-sm">
+                        <h5 class="fw-bold mb-3">Pourquoi choisir Le Gourmet ?</h5>
+                        <ul class="mb-0 ps-3">
+                            <li>Plats faits maison</li>
+                            <li>Livraison rapide</li>
+                            <li>Suivi des commandes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Nos plats populaires</h3>

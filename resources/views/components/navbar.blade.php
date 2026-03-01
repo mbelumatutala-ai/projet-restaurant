@@ -27,28 +27,32 @@
                     </a>
                 </li>
             </ul>
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ auth()->user()->name }}
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    @if(auth()->user()->role === 'admin')
+            @auth
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ auth()->user()->name }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        @if(auth()->user()->role === 'admin')
+                            <li>
+                                <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                            </li>
+                        @endif
                         <li>
-                            <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="dropdown-item" href="{{ route('commandes.index') }}">Mes commandes</a>
                         </li>
-                    @endif
-                    <li>
-                        <a class="dropdown-item" href="{{ route('commandes.index') }}">Mes commandes</a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="dropdown-item text-danger">Deconnexion</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">Deconnexion</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            @else
+                <a href="{{ route('login.page') }}" class="btn btn-primary btn-sm">Login</a>
+            @endauth
         </div>
     </div>
 </nav>

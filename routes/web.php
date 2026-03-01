@@ -10,9 +10,6 @@ use App\Http\Controllers\PlatsController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'loginPage'])->name('login.page');
@@ -25,6 +22,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+    Route::get('/', [PageController::class, 'home'])->name('root');
     Route::get('/home', [PageController::class, 'home'])->name('home');
     Route::get('/menu', [MenuController::class, 'index'])->name('menu');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
