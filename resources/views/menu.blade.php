@@ -49,7 +49,7 @@
             <div class="col-md-6 col-lg-4 col-xl-3">
                 <div class="card h-100 border-0 shadow-sm">
                     <img
-                        src="{{ $plat->thmbdail ?: 'https://via.placeholder.com/640x480?text=Plat' }}"
+                        src="{{ $plat->thmbdail ? asset('storage/' . ltrim($plat->thmbdail, '/')) : 'https://via.placeholder.com/640x480?text=Plat' }}"
                         class="card-img-top"
                         alt="{{ $plat->nom }}"
                     >

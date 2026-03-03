@@ -74,7 +74,9 @@ class PlatsController extends Controller
             'est_disponible' => (bool) ($validated['est_disponible'] ?? true),
         ]);
 
-        return back()->with('success', 'Plat ajoute.');
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Plat ajoute.');
     }
 
     public function destroy(Plat $plat): RedirectResponse
