@@ -9,7 +9,7 @@ use App\Http\Controllers\PlatsController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-
+   
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'loginPage'])->name('login.page');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
